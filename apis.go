@@ -125,9 +125,9 @@ func HandleAsanaSectionsTasksWS(client *http.Client, ws *websocket.Conn, element
 		rs := make(chan *http.Request)
 		rd := make(chan *http.Request)
 
-		go getTaskAsync("task", token, elements[i].Gid, rt)
-		go getTaskAsync("stories", token, elements[i].Gid, rs)
-		go getTaskAsync("dependencies", token, elements[i].Gid, rd)
+		go GetTaskAsync("task", token, elements[i].Gid, rt)
+		go GetTaskAsync("stories", token, elements[i].Gid, rs)
+		go GetTaskAsync("dependencies", token, elements[i].Gid, rd)
 
 		rst := <-rt
 		res, err := serverutils.GetBodyResponseRequest(client, rst)
@@ -172,7 +172,7 @@ func HandleAsanaSectionsTasksWS(client *http.Client, ws *websocket.Conn, element
 			return nil, errTask
 		}
 
-		/*errTaskR := createUserStoryResultHQA(&task)
+		/*errTaskR := CreateUserStoryResultHQA(&task)
 		if errTaskR != nil {
 			return nil, errTaskR
 		}*/
@@ -219,7 +219,7 @@ func createUserStoryHQA(task *dbmanager.Task, user string) error {
 	return nil
 }
 
-func createUserStoryResultHQA(task *dbmanager.Task) error {
+func CreateUserStoryResultHQA(task *dbmanager.Task) error {
 
 	//task.State = "close"
 	task.Result.Message = "Succesful"                                            // revisar con la base de datos
