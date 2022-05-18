@@ -191,7 +191,7 @@ func GetTask(respuestaString string) dbmanager.Task {
 	return tasks
 }
 
-func getTaskAsync(t string, token string, task string, rc chan *http.Request) {
+func GetTaskAsync(t string, token string, task string, rc chan *http.Request) {
 
 	var r *http.Request
 	if t == "stories" {
