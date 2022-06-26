@@ -1,0 +1,15 @@
+{
+    "asana": {
+        "clientId": "1201830256646257",
+        "clientSecrect": "3d19ec3d43e86e52add5d0439bafc054",
+        "redirect_uri": "http://localhost:3000/sync/",
+        "timeAsyncTask": 1700
+    },
+    "websocket": {
+        "hosts": [
+            "http://localhost:3000"
+        ],
+        "protocol": "hqaToken",
+        "token": "key"
+    }
+}
