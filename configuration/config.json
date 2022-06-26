@@ -7,7 +7,8 @@
     },
     "websocket": {
         "hosts": [
-            "http://localhost:3000"
+            "http://localhost:3000",
+            "helloworld-bbe50b0-njhrvwtjhq-uc.a.run.app"
         ],
         "protocol": "hqaToken",
         "token": "key"

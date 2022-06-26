@@ -43,7 +43,7 @@ type ErrorWS struct {
 
 func (ws *WebsocketHQA) NewWebSocketHQA() {
 
-	path, _ := filepath.Abs("../configuration/config.json")
+	path, _ := filepath.Abs("./configuration/config.json")
 	file, _ := ioutil.ReadFile(path)
 	var result map[string]interface{}
 	json.Unmarshal([]byte(file), &result)
