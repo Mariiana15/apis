@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"os"
 	"path/filepath"
 	"strings"
 
@@ -47,7 +46,7 @@ func GetCode(asana Asana) (string, error) {
 	code_verifier := v.String()
 	code_challenge := v.CodeChallengeS256()
 	code_challenge_method := "S256"
-	message = fmt.Sprintf("{\"url\": \"%vclient_id=%v&redirect_uri=%v&response_type=code&state=thisIsARandomString&code_challenge_method=%v&code_challenge=%v&scope=default\",\"code_verifier\":\"%v\"}", oautCodehUrl, os.Getenv("ASANA_CLIENT_ID"), os.Getenv("ASANA_REDIRECT"), code_challenge_method, code_challenge, code_verifier)
+	message = fmt.Sprintf("{\"url\": \"%vclient_id=%v&redirect_uri=%v&response_type=code&state=thisIsARandomString&code_challenge_method=%v&code_challenge=%v&scope=default\",\"code_verifier\":\"%v\"}", oautCodehUrl, "1201830256646257", "http://localhost:3000/sync/", code_challenge_method, code_challenge, code_verifier)
 	return message, nil
 }
 
@@ -55,9 +54,9 @@ func GetParamsOauth(code string, codeVerifier string, asana Asana) *strings.Read
 
 	data := url.Values{}
 	data.Set("grant_type", "authorization_code")
-	data.Set("client_id", os.Getenv("ASANA_CLIENT_ID"))
-	data.Set("client_secret", os.Getenv("ASANA_CLIENT_SECRECT"))
-	data.Set("redirect_uri", os.Getenv("ASANA_REDIRECT"))
+	data.Set("client_id", "1201830256646257")
+	data.Set("client_secret", "3d19ec3d43e86e52add5d0439bafc054")
+	data.Set("redirect_uri", "http://localhost:3000/sync/")
 	data.Set("code", code)
 	data.Set("code_verifier", codeVerifier)
 	return strings.NewReader(data.Encode())
