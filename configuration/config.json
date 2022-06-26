@@ -7,8 +7,7 @@
     },
     "websocket": {
         "hosts": [
-            "http://localhost:3000",
-            "https://mousee-beta.web.app/"
+            "http://localhost:3000"
         ],
         "protocol": "hqaToken",
         "token": "key"
