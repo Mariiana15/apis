@@ -32,6 +32,7 @@ type ResponseOpenAI struct {
 	Model   string          `json:"model"`
 	Usage   UsageOpenAI     `json:"usage"`
 	Choices []ChoicesOpenAI `json:"choices"`
+	Options []string        `json:"options"`
 }
 
 type UsageOpenAI struct {
