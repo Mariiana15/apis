@@ -6,11 +6,13 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/Mariiana15/dbmanager"
 	"github.com/Mariiana15/serverutils"
+	"github.com/joho/godotenv"
 )
 
 var oautCodehUrl = "https://app.asana.com/-/oauth_authorize?"
@@ -24,6 +26,26 @@ type Asana struct {
 	ClientSecret  string `json:"clientSecrect"`
 	RedirectUri   string `json:"redirect_uri"`
 	TimeAsyncTask int16  `json:"timeAsyncTask"`
+}
+
+type ResponseOpenAI struct {
+	Model         string          `json:"model"`
+	Usage         UsageOpenAI     `json:"usage"`
+	Choices       []ChoicesOpenAI `json:"choices"`
+	TimeAsyncTask int16           `json:"timeAsyncTask"`
+}
+
+type UsageOpenAI struct {
+	PromptTokens     string `json:"prompt_tokens"`
+	CompletionTokens string `json:"completion_tokens"`
+	TotalTokens      string `json:"total_tokens"`
+}
+
+type ChoicesOpenAI struct {
+	Text         string `json:"text"`
+	Index        string `json:"index"`
+	Logprobs     string `json:"logprobs"`
+	FinishReason string `json:"finish_reason"`
 }
 
 func (asana *Asana) GetProperties() {
@@ -51,12 +73,15 @@ func GetCode(asana Asana) (string, error) {
 }
 
 func GetParamsOauth(code string, codeVerifier string, asana Asana) *strings.Reader {
-
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
 	data := url.Values{}
 	data.Set("grant_type", "authorization_code")
-	data.Set("client_id", "1201830256646257")
-	data.Set("client_secret", "3d19ec3d43e86e52add5d0439bafc054")
-	data.Set("redirect_uri", "http://localhost:3000/sync/")
+	data.Set("client_id", os.Getenv("ASANA_CLIENT_ID"))
+	data.Set("client_secret", os.Getenv("ASANA_CLIENT_SECRECT"))
+	data.Set("redirect_uri", os.Getenv("ASANA_REDIRECT"))
 	data.Set("code", code)
 	data.Set("code_verifier", codeVerifier)
 	return strings.NewReader(data.Encode())
@@ -137,6 +162,15 @@ func GetGeneral(respuestaString string) []dbmanager.General {
 	byteData, _ := json.Marshal(response["data"])
 	json.Unmarshal(byteData, &projects)
 	return projects
+}
+
+func GetGeneralOpenaAI(respuestaString string) ResponseOpenAI {
+	var response map[string]interface{}
+	var r ResponseOpenAI
+	json.Unmarshal([]byte(respuestaString), &response)
+	byteData, _ := json.Marshal(response)
+	json.Unmarshal(byteData, &r)
+	return r
 }
 
 func GetGeneralUnd(respuestaString string) dbmanager.General {
