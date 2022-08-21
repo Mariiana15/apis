@@ -29,21 +29,20 @@ type Asana struct {
 }
 
 type ResponseOpenAI struct {
-	Model         string          `json:"model"`
-	Usage         UsageOpenAI     `json:"usage"`
-	Choices       []ChoicesOpenAI `json:"choices"`
-	TimeAsyncTask int16           `json:"timeAsyncTask"`
+	Model   string          `json:"model"`
+	Usage   UsageOpenAI     `json:"usage"`
+	Choices []ChoicesOpenAI `json:"choices"`
 }
 
 type UsageOpenAI struct {
-	PromptTokens     string `json:"prompt_tokens"`
-	CompletionTokens string `json:"completion_tokens"`
-	TotalTokens      string `json:"total_tokens"`
+	PromptTokens     int32 `json:"prompt_tokens"`
+	CompletionTokens int32 `json:"completion_tokens"`
+	TotalTokens      int32 `json:"total_tokens"`
 }
 
 type ChoicesOpenAI struct {
 	Text         string `json:"text"`
-	Index        string `json:"index"`
+	Index        int32  `json:"index"`
 	Logprobs     string `json:"logprobs"`
 	FinishReason string `json:"finish_reason"`
 }
