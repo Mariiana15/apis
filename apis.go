@@ -187,6 +187,9 @@ func HandleAsanaSectionsTasksWS(client *http.Client, ws *websocket.Conn, element
 		} else {
 			tasks = append(tasks, task)
 		}
+		if i+1 == 2 {
+			break
+		}
 
 	}
 	return tasks, nil
